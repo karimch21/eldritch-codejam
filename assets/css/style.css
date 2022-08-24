@@ -1,0 +1,231 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+::after,
+::before {
+    box-sizing: inherit;
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+    background-color: black;
+    background-image: url(../home.png);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+    min-height: 100vh;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    display: inline-block;
+    color: inherit;
+    cursor: pointer;
+}
+
+.container {
+    padding: 0 10px;
+    max-width: 1590px;
+    margin: 0 auto;
+}
+
+.content__game {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.game-data {
+    margin-top: 20px;
+    font-size: 21px;
+    min-height: 49px;
+}
+
+.game-data span {
+    font-weight: 900;
+    font-style: italic;
+}
+
+.ancients {
+    margin-top: 10px;
+    margin-right: 35px;
+    padding: 15px 10px 0px;
+    max-width: 580px;
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.463);
+}
+
+.ancient__card {
+    margin-bottom: 15px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    max-width: 280px;
+    min-height: 300px;
+    width: 100%;
+    padding: 60% 0 0 0;
+    cursor: pointer;
+}
+
+.azathoth {
+    background-image: url(/assets/Ancients/Azathoth.png);
+}
+
+.cthulhu {
+    background-image: url(/assets/Ancients/Cthulthu.png);
+}
+
+.iogSothoth {
+    background-image: url(/assets/Ancients/IogSothoth.png);
+}
+
+.shubNiggurath {
+    background-image: url(/assets/Ancients/ShubNiggurath.png);
+}
+
+.popup-wrap {
+    width: auto;
+    height: auto;
+    top: -100%;
+}
+
+.popup-wrap--active {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.63);
+}
+
+.popup {
+    padding: 25px;
+    position: fixed;
+    left: 50%;
+    top: -100%;
+    transform: translate(-50%, 0%);
+    max-width: 300px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: rgb(0, 0, 0);
+    transition: all 0.6s;
+}
+
+.popup__title {
+    margin-bottom: 20px;
+}
+
+.popup--active {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.6s;
+}
+
+.difficulties {
+    text-align: center;
+}
+
+.difficultiy {
+    cursor: pointer;
+}
+
+.difficultiy:not(:nth-last-of-type(1)) {
+    margin-bottom: 20px;
+}
+
+.btn-kneading {
+    margin-right: 35px;
+    padding: 10px 10px;
+    font-size: 21px;
+    background-color: #000;
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+
+.shema {
+    border-collapse: collapse;
+}
+
+.shema tr {
+    display: flex;
+    align-items: center;
+}
+
+td.blue {
+    order: 3;
+}
+
+td.brown {
+    order: 2;
+}
+
+.shema tr {
+    border: 1px solid;
+    border-right: none;
+}
+
+.shema td {
+    padding: 15px;
+    font-size: 32px;
+    min-width: 80px;
+    min-height: 80px;
+    border-right: 1px solid;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.shema .shema__name-stage {
+    max-width: 200px;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.shema td span {
+    display: inline-block;
+}
+
+td span {
+    padding: 7px 0 0;
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    color: #000;
+    font-weight: 900;
+}
+
+.green span {
+    background-color: rgb(1, 250, 1);
+}
+
+.blue span {
+    background-color: blue;
+}
+
+.brown span {
+    background-color: rgb(225, 125, 44);
+}

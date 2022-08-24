@@ -1,41 +1,24 @@
-import green1 from './green1.png';
-import green2 from './green2.png';
-import green3 from './green3.png';
-import green4 from './green4.png';
-import green5 from './green5.png';
-import green6 from './green6.png';
-import green7 from './green7.png';
-import green8 from './green8.png';
-import green9 from './green9.png';
-import green10 from './green10.png';
-import green11 from './green11.png';
-import green12 from './green12.png';
-import green13 from './green13.png';
-import green14 from './green14.png';
-import green15 from './green15.png';
-import green16 from './green16.png';
-import green17 from './green17.png';
-import green18 from './green18.png';
+let url = './assets/MythicCards/green/';
 
 const cards = {
-  green1,
-  green2,
-  green3,
-  green4,
-  green5,
-  green6,
-  green7,
-  green8,
-  green9,
-  green10,
-  green11,
-  green12,
-  green13,
-  green14,
-  green15,
-  green16,
-  green17,
-  green18,
-};
+    green1: `${url}green1.png`,
+    green2: `${url}green2.png`,
+    green3: `${url}green3.png`,
+    green4: `${url}green4.png`,
+    green5: `${url}green5.png`,
+    green6: `${url}green6.png`,
+    green7: `${url}green7.png`,
+    green8: `${url}green8.png`,
+    green9: `${url}green9.png`,
+    green10: `${url}green10.png`,
+    green11: `${url}green11.png`,
+    green12: `${url}green12.png`,
+    green13: `${url}green13.png`,
+    green14: `${url}green14.png`,
+    green15: `${url}green15.png`,
+    green16: `${url}green16.png`,
+    green17: `${url}green17.png`,
+    green18: `${url}green18.png`,
+}
 
 export default cards;
