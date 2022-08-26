@@ -234,7 +234,6 @@ function deckBuilding(cards, selectedGameData, newFormAncients, difficulties) {
         return acc;
     }, {});
     let currentDifficulty = newDifficulties[selectedGameData.difficulty].id;
-    let sortedCards = {};
 
     if (!currentAncient && !currentDifficulty) return
 
@@ -253,106 +252,11 @@ function deckBuilding(cards, selectedGameData, newFormAncients, difficulties) {
     let blueCards = sortingCard(cards.blueCards, currentDifficulty, totalBlueCards);
     let greenCards = sortingCard(cards.greenCards, currentDifficulty, totalGreenCards);
     let brownCards = sortingCard(cards.brownCards, currentDifficulty, totalBrownCards);
+    let mergedSortedCards = mergingTransformingSortedCards(blueCards, greenCards, brownCards)
+    let decksByStages = formationDecksForStages(newFormAncients[currentAncient], mergedSortedCards);
 
-
-
-    console.log(blueCards, greenCards, brownCards)
-}
-
-
-function sortingCard0(cards) {
-    let a = []
-    let copyCards = JSON.parse(JSON.stringify(cards));
-    console.log(copyCards)
-    return function f(cards, currentDifficulty, totalCards) {
-
-        let couplesDifficulty = {
-            'easy': 'normal',
-            'hard': 'normal',
-            'normal': ['easy', 'hard']
-        }
-
-        if (Array.isArray(currentDifficulty)) {
-            let randomNum = generateRandomNum(0, 1);
-            currentDifficulty = currentDifficulty[randomNum];
-            console.log(currentDifficulty)
-        }
-
-        for (let card of cards) {
-            if (card.difficulty === currentDifficulty) {
-                if (a.length === totalCards) break
-                a.push(card);
-            }
-        }
-
-        if (a.length === totalCards) return a
-        if (a.length <= totalCards) {
-            f(cards, couplesDifficulty[currentDifficulty], totalCards);
-        }
-        return a
-    }
-}
-
-
-function sortingCard1(cards) {
-    let cardsIssue = {}
-    let count = 0;
-    let copyCards = JSON.parse(JSON.stringify(cards));
-    let totalCardsThisColor = 0;
-
-    return function f(cards, currentDifficulty, totalCards) {
-
-
-        let couplesDifficulty = {
-            'easy': 'normal',
-            'hard': 'normal',
-            'normal': ['easy', 'hard', 'normal']
-        }
-        console.log(currentDifficulty)
-
-        if (Array.isArray(currentDifficulty)) {
-            let randomNum = generateRandomNum(0, currentDifficulty.length - 1);
-            currentDifficulty = currentDifficulty[randomNum]
-            console.log(currentDifficulty)
-        }
-
-        // for (let i = 0; i < copyCards.length; i++) {
-        //     console.log(totalCardsThisColor, count)
-        //     if (count === totalCardsThisColor) break
-        //     let card = copyCards[i];
-
-        //     if (card.difficulty === currentDifficulty) {
-
-        //         if (!cardsIssue[card.id]) {
-        //             count++;
-        //             totalCardsThisColor++;
-        //             cardsIssue[card.id] = card;
-        //         }
-        //     }
-        // }
-
-        console.log(copyCards)
-        console.log(cardsIssue)
-
-        // for (let i = 0; i < cards.length; i++) {
-        //     let randomNum = generateRandomNum(0, cards.length - 1)
-
-        //     let card = cards[randomNum];
-        //     if (card.difficulty === currentDifficulty) {
-        //         if (count === totalCards) break
-        //         if (!cardsIssue[card.id]) {
-        //             count++;
-        //             cardsIssue[card.id] = card;
-        //         }
-        //     }
-        // }
-
-        if (count === totalCards) return cardsIssue
-        if (count <= totalCards) {
-            // f(cards, couplesDifficulty[currentDifficulty], totalCards);
-        }
-        return cardsIssue
-    }
+    if (!decksByStages) return
+    console.log(decksByStages)
 }
 
 function sortingCard(cards, currentDifficulty, totalCards) {
@@ -367,6 +271,7 @@ function sortingCard(cards, currentDifficulty, totalCards) {
 
     for (let i = 0; i < copyCards.length; i++) {
         let randomNum = generateRandomNum(0, cards.length - 1)
+
         let card = copyCards[randomNum];
 
         if (card.difficulty === currentDifficulty) {
@@ -386,7 +291,6 @@ function sortingCard(cards, currentDifficulty, totalCards) {
     return cardsIssue
 
 }
-
 
 function addingCards(count, cards, currentDifficulty, totalCards, cardsIssue) {
 
@@ -413,6 +317,45 @@ function addingCards(count, cards, currentDifficulty, totalCards, cardsIssue) {
     }
 }
 
+function mergingTransformingSortedCards(blueCards, greenCards, brownCards) {
+    return {
+        'blueCards': Object.values(blueCards),
+        'greenCards': Object.values(greenCards),
+        'brownCards': Object.values(brownCards)
+    }
+}
+
+function formationDecksForStages(dataAncient, mergedSortedCards) {
+    let decksByStages = {};
+    for (let key in dataAncient) {
+        if (key.includes('Stage')) {
+
+            let stage = key.split('Stage')[0] + 'Stage';
+
+            let amountBlueCards = dataAncient[stage].blueCards;
+            let amountGreenCards = dataAncient[stage].greenCards;
+            let amoutBrownCards = dataAncient[stage].brownCards;
+            let cards = [];
+
+            getDeck(stage, amountBlueCards, cards, decksByStages, mergedSortedCards.blueCards)
+            getDeck(stage, amountGreenCards, cards, decksByStages, mergedSortedCards.greenCards)
+            getDeck(stage, amoutBrownCards, cards, decksByStages, mergedSortedCards.brownCards)
+        }
+
+    }
+    return decksByStages;
+}
+
+function getDeck(stage, amountCard, cards, decksByStages, arrCards) {
+
+    while (amountCard--) {
+        let randomNum = generateRandomNum(0, arrCards.length - 1);
+
+        cards.push(arrCards[randomNum]);
+        decksByStages[stage] = cards;
+        arrCards.splice(randomNum, 1);
+    }
+}
 
 function generateRandomNum(min, max) {
     return Math.round(min + Math.random() * (max - min));
