@@ -250,21 +250,172 @@ function deckBuilding(cards, selectedGameData, newFormAncients, difficulties) {
 
     }
 
-    Object.entries(cards).forEach(([key, value]) => {
+    let blueCards = sortingCard(cards.blueCards, currentDifficulty, totalBlueCards);
+    let greenCards = sortingCard(cards.greenCards, currentDifficulty, totalGreenCards);
+    let brownCards = sortingCard(cards.brownCards, currentDifficulty, totalBrownCards);
 
-        sortedCards[key] = value.filter(card => {
 
-            if (card.difficulty == currentDifficulty) return card;
-        });
-    });
 
-    console.log(sortedCards)
+    console.log(blueCards, greenCards, brownCards)
+}
 
-    console.log('============')
-    console.log(cards)
-    console.log(currentDataAncient, totalBlueCards, totalBrownCards, totalGreenCards)
-    console.log(cards)
-    console.log(cards, selectedGameData, newFormAncients)
+
+function sortingCard0(cards) {
+    let a = []
+    let copyCards = JSON.parse(JSON.stringify(cards));
+    console.log(copyCards)
+    return function f(cards, currentDifficulty, totalCards) {
+
+        let couplesDifficulty = {
+            'easy': 'normal',
+            'hard': 'normal',
+            'normal': ['easy', 'hard']
+        }
+
+        if (Array.isArray(currentDifficulty)) {
+            let randomNum = generateRandomNum(0, 1);
+            currentDifficulty = currentDifficulty[randomNum];
+            console.log(currentDifficulty)
+        }
+
+        for (let card of cards) {
+            if (card.difficulty === currentDifficulty) {
+                if (a.length === totalCards) break
+                a.push(card);
+            }
+        }
+
+        if (a.length === totalCards) return a
+        if (a.length <= totalCards) {
+            f(cards, couplesDifficulty[currentDifficulty], totalCards);
+        }
+        return a
+    }
+}
+
+
+function sortingCard1(cards) {
+    let cardsIssue = {}
+    let count = 0;
+    let copyCards = JSON.parse(JSON.stringify(cards));
+    let totalCardsThisColor = 0;
+
+    return function f(cards, currentDifficulty, totalCards) {
+
+
+        let couplesDifficulty = {
+            'easy': 'normal',
+            'hard': 'normal',
+            'normal': ['easy', 'hard', 'normal']
+        }
+        console.log(currentDifficulty)
+
+        if (Array.isArray(currentDifficulty)) {
+            let randomNum = generateRandomNum(0, currentDifficulty.length - 1);
+            currentDifficulty = currentDifficulty[randomNum]
+            console.log(currentDifficulty)
+        }
+
+        // for (let i = 0; i < copyCards.length; i++) {
+        //     console.log(totalCardsThisColor, count)
+        //     if (count === totalCardsThisColor) break
+        //     let card = copyCards[i];
+
+        //     if (card.difficulty === currentDifficulty) {
+
+        //         if (!cardsIssue[card.id]) {
+        //             count++;
+        //             totalCardsThisColor++;
+        //             cardsIssue[card.id] = card;
+        //         }
+        //     }
+        // }
+
+        console.log(copyCards)
+        console.log(cardsIssue)
+
+        // for (let i = 0; i < cards.length; i++) {
+        //     let randomNum = generateRandomNum(0, cards.length - 1)
+
+        //     let card = cards[randomNum];
+        //     if (card.difficulty === currentDifficulty) {
+        //         if (count === totalCards) break
+        //         if (!cardsIssue[card.id]) {
+        //             count++;
+        //             cardsIssue[card.id] = card;
+        //         }
+        //     }
+        // }
+
+        if (count === totalCards) return cardsIssue
+        if (count <= totalCards) {
+            // f(cards, couplesDifficulty[currentDifficulty], totalCards);
+        }
+        return cardsIssue
+    }
+}
+
+function sortingCard(cards, currentDifficulty, totalCards) {
+    let cardsIssue = {}
+    let count = 0;
+    let copyCards = JSON.parse(JSON.stringify(cards));
+    let couplesDifficulty = {
+        'easy': 'normal',
+        'hard': 'normal',
+        'normal': ['easy', 'hard']
+    }
+
+    for (let i = 0; i < copyCards.length; i++) {
+        let randomNum = generateRandomNum(0, cards.length - 1)
+        let card = copyCards[randomNum];
+
+        if (card.difficulty === currentDifficulty) {
+
+            if (count === totalCards) break;
+            if (!cardsIssue[card.id]) {
+                count++;
+                cardsIssue[card.id] = card;
+            }
+        }
+    }
+
+    if (count <= totalCards) {
+        addingCards(count, cards, couplesDifficulty[currentDifficulty], totalCards, cardsIssue);
+    }
+
+    return cardsIssue
+
+}
+
+
+function addingCards(count, cards, currentDifficulty, totalCards, cardsIssue) {
+
+    if (Array.isArray(currentDifficulty)) {
+        let randomNum = generateRandomNum(0, currentDifficulty.length - 1);
+        currentDifficulty = currentDifficulty[randomNum]
+    }
+    for (let i = 0; i < cards.length; i++) {
+        let randomNum = generateRandomNum(0, cards.length - 1)
+
+        let card = cards[randomNum];
+        if (card.difficulty === currentDifficulty) {
+            if (count === totalCards) break
+            if (!cardsIssue[card.id]) {
+                count++;
+                cardsIssue[card.id] = card;
+            }
+        }
+    }
+
+    if (count === totalCards) return cardsIssue
+    if (count <= totalCards) {
+        addingCards(count, cards, currentDifficulty, totalCards, cardsIssue);
+    }
+}
+
+
+function generateRandomNum(min, max) {
+    return Math.round(min + Math.random() * (max - min));
 }
 
 
