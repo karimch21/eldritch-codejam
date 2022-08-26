@@ -166,7 +166,12 @@ button {
     border: 1px solid #fff;
 }
 
+.shema-wrap {
+    min-height: 400px;
+}
+
 .shema {
+    margin-bottom: 30px;
     border-collapse: collapse;
 }
 
@@ -184,36 +189,29 @@ td.brown {
 }
 
 .shema tr {
-    border: 1px solid;
+    border: 2px solid;
     border-right: none;
 }
 
 .shema td {
-    padding: 15px;
     font-size: 32px;
-    min-width: 80px;
-    min-height: 80px;
-    border-right: 1px solid;
+    border-right: 2px solid;
     text-align: center;
     vertical-align: middle;
 }
 
 .shema .shema__name-stage {
+    padding: 15px 30px;
     max-width: 200px;
     width: 100%;
-    padding-top: 20px;
 }
 
 .shema td span {
-    display: inline-block;
+    display: block;
 }
 
 td span {
-    padding: 7px 0 0;
-    margin: 0 auto;
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
+    padding: 15px 30px;
     color: #000;
     font-weight: 900;
 }
@@ -228,4 +226,28 @@ td span {
 
 .brown span {
     background-color: rgb(225, 125, 44);
+}
+
+.card-back {
+    margin-bottom: 30px;
+    opacity: 0;
+    z-index: -1;
+    display: none;
+    cursor: pointer;
+}
+
+.card-back--active {
+    display: block;
+    background-image: url(/assets/mythicCardBackground.png);
+}
+
+.face-card,
+.card-back {
+    opacity: 1;
+    z-index: 1;
+    transition: opacity 0.5s;
+    min-height: 300px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }

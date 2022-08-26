@@ -9,6 +9,8 @@ const gameData = document.querySelector('.game-data');
 const shema = document.querySelector('.shema');
 let selectedGameData = {};
 
+let countStage = 0;
+
 window.addEventListener('load', () => {
     getDataAncients(ancients);
     createPopUp(difficulties)
@@ -257,6 +259,16 @@ function deckBuilding(cards, selectedGameData, newFormAncients, difficulties) {
 
     if (!decksByStages) return
     console.log(decksByStages)
+    resettingCardOutputCountStage()
+    let cardBack = appendBackCard();
+    cardBack.addEventListener('click', (e) => {
+        getCard(decksByStages)
+    })
+
+    console.log(cardBack)
+
+
+
 }
 
 function sortingCard(cards, currentDifficulty, totalCards) {
@@ -360,6 +372,68 @@ function getDeck(stage, amountCard, cards, decksByStages, arrCards) {
 function generateRandomNum(min, max) {
     return Math.round(min + Math.random() * (max - min));
 }
+
+function resettingCardOutputCountStage() {
+    countStage = 0;
+}
+
+function getCard(decksByStages) {
+    console.log(decksByStages)
+    let nameStage = Object.keys(decksByStages);
+    if (decksByStages[nameStage[nameStage.length - 1]].length === 0) {
+        deleteBackCard()
+        return
+    }
+    console.log(decksByStages)
+    let randomNum = generateRandomNum(0, decksByStages[nameStage[countStage]].length - 1)
+    let card = decksByStages[nameStage[countStage]][randomNum];
+    let faceCard = createFaceCard(card.cardFace)
+    appendingFaceCard(faceCard)
+    decksByStages[nameStage[countStage]].splice(randomNum, 1);
+
+    if (!decksByStages[nameStage[countStage]].length) {
+        countStage++;
+    }
+
+
+    console.log(card)
+}
+
+function appendingFaceCard(faceCard) {
+    deleteFaceCard()
+    let shemaWrap = document.querySelector('.shema-wrap');
+    if (!shemaWrap) return
+    appendingData(shemaWrap, faceCard)
+}
+
+function deleteFaceCard() {
+    let faceCard = document.querySelector('.face-card')
+    if (!faceCard) return
+    faceCard.remove()
+}
+
+function createFaceCard(backImage) {
+    let faceCard = document.createElement('div');
+    faceCard.classList.add('face-card', 'face-card--active');
+    faceCard.style.backgroundImage = `url(${backImage})`
+    return faceCard
+}
+
+function appendBackCard() {
+    let shemaWrap = document.querySelector('.shema-wrap');
+    if (!shemaWrap) return
+    let cardBack = document.createElement('div');
+    cardBack.classList.add('card-back', 'card-back--active');
+    appendingData(shemaWrap, cardBack);
+    return cardBack
+}
+
+function deleteBackCard() {
+    let cardBack = document.querySelector('.card-back');
+    if (!cardBack) return
+    cardBack.classList.remove('card-back--active');
+}
+
 
 
 //-----------algoritm kneading-----------
