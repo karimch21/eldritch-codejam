@@ -248,7 +248,6 @@ function deckBuilding(cards, selectedGameData, newFormAncients, difficulties) {
             totalBrownCards += colors.brownCards;
             totalBlueCards += colors.blueCards;
         }
-
     }
 
     let blueCards = sortingCard(cards.blueCards, currentDifficulty, totalBlueCards);
@@ -266,9 +265,6 @@ function deckBuilding(cards, selectedGameData, newFormAncients, difficulties) {
     })
 
     console.log(cardBack)
-
-
-
 }
 
 function sortingCard(cards, currentDifficulty, totalCards) {
@@ -384,9 +380,14 @@ function getCard(decksByStages) {
         deleteBackCard()
         return
     }
-    console.log(decksByStages)
+    console.log(decksByStages, decksByStages, nameStage[countStage])
     let randomNum = generateRandomNum(0, decksByStages[nameStage[countStage]].length - 1)
     let card = decksByStages[nameStage[countStage]][randomNum];
+
+
+    cardStagesCounter(card, nameStage[countStage], decksByStages, countStage)
+
+
     let faceCard = createFaceCard(card.cardFace)
     appendingFaceCard(faceCard)
     decksByStages[nameStage[countStage]].splice(randomNum, 1);
@@ -394,8 +395,6 @@ function getCard(decksByStages) {
     if (!decksByStages[nameStage[countStage]].length) {
         countStage++;
     }
-
-
     console.log(card)
 }
 
@@ -434,6 +433,21 @@ function deleteBackCard() {
     cardBack.classList.remove('card-back--active');
 }
 
+function cardStagesCounter(card, currentnameStage, decksByStages, countStage) {
+    console.log('!!!!!!!!!!!!!')
+    let cardsSameColor = decksByStages[currentnameStage].length;
+    let colorCard = (card.id).replace(/\d/gi, '');
+    let amountCards = document.querySelector(`.${currentnameStage} .${colorCard} span`);
+    if (!amountCards) return;
+    amountCards.textContent -= 1;
+
+    if (cardsSameColor === 1) {
+        let shemaName = document.querySelector(`td.${currentnameStage}`);
+        console.log(shemaName)
+        if (!shemaName) return
+        shemaName.classList.add('shema__name-stage--passed');
+    }
+}
 
 
 //-----------algoritm kneading-----------

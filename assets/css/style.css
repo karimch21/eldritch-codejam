@@ -206,6 +206,14 @@ td.brown {
     width: 100%;
 }
 
+.shema__name-stage {
+    color: #fff;
+}
+
+.shema__name-stage--passed {
+    color: red;
+}
+
 .shema td span {
     display: block;
 }
